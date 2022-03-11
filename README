@@ -1,0 +1,69 @@
+===============================================================================
+
+                            Tema MN 2021
+                    Interpolare aplicata pe imagini
+
+===============================================================================
+
+1. nearest-neighbour
+	1.1 - nn_2x2 - interpolarea nn are la baza gasirea celui mai apropiat vecin 
+		       pentru fiecare pixel. La aceasta functie am aflat vecinul	
+		       cel mai apropiat calculand distanta in modul intre val poz 
+                       pixelui si capete si comparand distanta pentru a afla minimul.
+                       In final val pixelui din imaginea finala va fi valoarea vecinului
+		       cel mai apropiat de pixelul nostru
+	1.2 - nn_resize - dupa definirea factorului de scalare si a matricii de 
+		         transformare parcurgem fiecare pixel din imaginea finala
+		         si aflam pixelul corespunzator imaginii initiale caruia ii
+			 determinam cel mai apropiat vecin folosind functia de rotunjire round. 
+			 In final tinand cont de sistemul de coord punem in matricea finala
+                         valoarea pixalului din imaginea initiala a celui mai apropiat vecin 
+                         gasit
+        1.3 - _RGB    - functiile RGB presupun extragerea celor 3 canale si aplicarea
+		        functiilor precedente. In final cele 3 matrici nou obtinute se
+			concateneaza prin functia de cat     
+
+===============================================================================
+
+2. bilinear
+	2.1 - bilinear_2x2 - interpolarea biliniara functioneaza pe baza unui vector de coef.
+			     aflat anterior. Fiecare pixel din imaginea finala capata valoarea 
+                             sumei produselor punctelor intermediare si a coeficientilor calculati
+                             prin functia bilinear_coef conform indicatiilor din pdf, conform 
+                             relatiei date  obtinuta prin calculul succesiv de pante
+
+	2.2 - bilinear_resize - dupa definirea factorului de scalare si a matricii de 
+		              transformare parcurgem fiecare pixel din imaginea finala
+		              si aflam pixelul corespunzator imaginii initiale caruia 
+                              ii calculam cele 4 puncte care il inconjoara. Apoi aflam 
+                              vectorul de coef corespunzator celor 4 puncte aflate anterior
+                              si calculam fiecare pixel din imaginea finala ca suma produselor
+                              coef si a poz pixelilor din imaginea initiala
+	
+	2.3. - biliniar_rotate - se urmaresc aceiasi pasi ca la redimensionare doar ca de
+                                aceasta data se va folosi o matrice de rotatie
+ 
+	2.4 - _RGB     - functiile RGB presupun extragerea celor 3 canale si aplicarea
+		         functiilor precedente. In final cele 3 matrici nou obtinute se
+			 concateneaza prin functia de cat
+
+===============================================================================
+3. bicubic
+	3.1 - precalc_d - calculam derivatele partiale ale imaginii apeland pt fiecare 
+			  pixel functiile fx/fy/fxy care folosesc metoda diferentelor finite
+			  conform indicatiilor din pdf. Se tine cont de marginile in care nu 
+                          exista derivate pentru pixeli.
+
+	3.2 - bicubic_resize - dupa definirea factorului de scalare si a matricii de 
+		              transformare parcurgem fiecare pixel din imaginea finala
+		              si aflam pixelul corespunzator imaginii initiale caruia 
+                              ii calculam cele 4 puncte care il inconjoara. Apoi aflam 
+                              matricea de coef corespunzator celor 4 puncte aflate anterior
+                              si calculam fiecare pixel din imaginea finala ca produs matricial
+                              intre coef si poz pixelilor din imaginea initiala. Coeficientii se 
+			      afla apeland functia bicubic coef care calculeaza matricile                               intermediare si mai apoi cea finala cu coef
+	3.3 - _RGB     - functiile RGB presupun extragerea celor 3 canale si aplicarea
+		         functiilor precedente. In final cele 3 matrici nou obtinute se
+			 concateneaza prin functia de cat
+
+===============================================================================
